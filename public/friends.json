@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "Nafi Ahmed",
+    "picture": "https://i.pravatar.cc/150?u=nafi",
+    "days_since_contact": 2,
+    "tags": ["Best Friend", "University"],
+    "status": "on-track"
+  },
+  {
+    "id": 2,
+    "name": "Ariful Islam",
+    "picture": "https://i.pravatar.cc/150?u=arif",
+    "days_since_contact": 15,
+    "tags": ["School", "Football"],
+    "status": "almost due"
+  },
+  {
+    "id": 3,
+    "name": "Rakib Hasan",
+    "picture": "https://i.pravatar.cc/150?u=rakib",
+    "days_since_contact": 45,
+    "tags": ["Work", "Gym"],
+    "status": "overdue"
+  },
+  {
+    "id": 4,
+    "name": "Samiul Haque",
+    "picture": "https://i.pravatar.cc/150?u=sami",
+    "days_since_contact": 5,
+    "tags": ["Neighbor"],
+    "status": "on-track"
+  }
+]
