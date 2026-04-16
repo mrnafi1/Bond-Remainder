@@ -1,65 +1,107 @@
-import Image from "next/image";
+"use client";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function Home() {
+  const [friends, setFriends] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/friends.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setFriends(data);
+        setLoading(false);
+      })
+      .catch((err) => console.error("Error fetching data:", err));
+  }, []);
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "overdue":
+        return "bg-red-100 text-red-600";
+      case "almost due":
+        return "bg-orange-100 text-orange-600";
+      case "on-track":
+        return "bg-green-100 text-green-600";
+      default:
+        return "bg-gray-100 text-gray-600";
+    }
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="text-center mb-16">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          Friends to keep close in your life
+        </h1>
+        <p className="text-gray-500 max-w-2xl mx-auto mb-8">
+          Your personal shelf of meaningful connections. Browse, tend, and nurture the relationships that matter most.
+        </p>
+        <button className="bg-[#1B4B36] text-white px-6 py-2.5 rounded-md font-medium flex items-center gap-2 mx-auto hover:bg-[#153b2a] transition-colors">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+          Add a Friend
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
+          <h3 className="text-4xl font-bold text-gray-900 mb-2">10</h3>
+          <p className="text-sm text-gray-400 font-medium">Total Friends</p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
+          <h3 className="text-4xl font-bold text-gray-900 mb-2">3</h3>
+          <p className="text-sm text-gray-400 font-medium">On Track</p>
         </div>
-      </main>
+        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
+          <h3 className="text-4xl font-bold text-gray-900 mb-2">6</h3>
+          <p className="text-sm text-gray-400 font-medium">Need Attention</p>
+        </div>
+        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
+          <h3 className="text-4xl font-bold text-gray-900 mb-2">12</h3>
+          <p className="text-sm text-gray-400 font-medium">Interactions This Month</p>
+        </div>
+      </div>
+
+      <h2 className="text-2xl font-bold text-gray-900 mb-8">Your Friends</h2>
+
+      {loading ? (
+        <div className="flex justify-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-[#1B4B36]"></div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {friends.map((friend) => (
+            <Link href={`/friend/${friend.id}`} key={friend.id}>
+              <div className="bg-white p-6 rounded-2xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] border border-gray-100 flex flex-col items-center text-center hover:scale-[1.02] transition-transform cursor-pointer h-full">
+                <div className="relative w-24 h-24 mb-4">
+                  <img
+                    src={friend.picture}
+                    alt={friend.name}
+                    className="w-full h-full rounded-full object-cover border-4 border-gray-50 shadow-sm"
+                  />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">{friend.name}</h3>
+                <p className="text-sm text-gray-400 mb-4 font-medium">{friend.days_since_contact} days ago</p>
+                
+                <div className="flex flex-wrap justify-center gap-2 mb-6">
+                  {friend.tags.map((tag, index) => (
+                    <span key={index} className="px-3 py-1 bg-[#F1F5F9] text-[#475569] text-[10px] font-bold uppercase tracking-wider rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <span className={`mt-auto w-full py-2 rounded-lg text-[11px] font-black uppercase tracking-widest ${getStatusColor(friend.status)}`}>
+                  {friend.status}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
