@@ -1,22 +1,18 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar"; 
-
-const inter = Inter({ subsets: ["latin"] });
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "KeenKeeper - Friendship Manager",
-  description: "Keep track of your meaningful connections.",
+  description: "Manage your connections effectively",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-[#F8FAFC]`}>
-        <Navbar />
-        <main className="min-h-screen">
-          {children}
-        </main>
+      <body className="bg-[#FDFBF7]">
+        
+        <Toaster position="top-center" reverseOrder={false} />
+        {children}
       </body>
     </html>
   );

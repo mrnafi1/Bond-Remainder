@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   const [friends, setFriends] = useState([]);
@@ -12,96 +13,116 @@ export default function Home() {
       .then((data) => {
         setFriends(data);
         setLoading(false);
-      })
-      .catch((err) => console.error("Error fetching data:", err));
+      });
   }, []);
 
   const getStatusColor = (status) => {
-    switch (status) {
-      case "overdue":
-        return "bg-red-100 text-red-600";
-      case "almost due":
-        return "bg-orange-100 text-orange-600";
-      case "on-track":
-        return "bg-green-100 text-green-600";
-      default:
-        return "bg-gray-100 text-gray-600";
+    switch (status?.toLowerCase()) {
+      case "on-track": return "bg-green-100 text-green-700";
+      case "almost due": return "bg-orange-100 text-orange-700";
+      case "overdue": return "bg-red-100 text-red-700";
+      default: return "bg-gray-100 text-gray-700";
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F9FAFB]">
+        <div className="w-16 h-16 border-4 border-green-100 border-t-[#1B4B36] rounded-full animate-spin mb-4"></div>
+        <p className="font-bold text-gray-400 uppercase tracking-widest text-[10px]">Loading Your Network...</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12">
-      <div className="text-center mb-16">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Friends to keep close in your life
-        </h1>
-        <p className="text-gray-500 max-w-2xl mx-auto mb-8">
-          Your personal shelf of meaningful connections. Browse, tend, and nurture the relationships that matter most.
-        </p>
-        <button className="bg-[#1B4B36] text-white px-6 py-2.5 rounded-md font-medium flex items-center gap-2 mx-auto hover:bg-[#153b2a] transition-colors">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
-          Add a Friend
-        </button>
-      </div>
+    <div className="bg-white min-h-screen font-sans">
+      
+     
+      <nav className="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center border-b border-gray-50">
+        <Link href="/">
+          <img src="/assets/logo.png" alt="KeenKeeper" className="h-8 object-contain" onError={(e) => e.target.style.display='none'} />
+        </Link>
+        <div className="flex items-center gap-6 text-[11px] font-bold text-gray-500 uppercase tracking-widest">
+          
+          <Link href="/" className="flex items-center gap-2 bg-[#1B4B36] text-white px-6 py-3 rounded-lg shadow-sm">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+            Home
+          </Link>
+          <Link href="/timeline" className="flex items-center gap-2 hover:text-black transition-colors">
+            Timeline
+          </Link>
+          <Link href="/stats" className="flex items-center gap-2 hover:text-black transition-colors">
+            Stats
+          </Link>
+        </div>
+      </nav>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
-          <h3 className="text-4xl font-bold text-gray-900 mb-2">10</h3>
-          <p className="text-sm text-gray-400 font-medium">Total Friends</p>
+      <main className="max-w-7xl mx-auto px-6 pb-20">
+        
+        
+        <div className="text-center pt-16 pb-12">
+          <h1 className="text-4xl md:text-[44px] font-black text-gray-900 mb-6 tracking-tight">Friends to keep close in your life</h1>
+          <p className="text-sm text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Your personal shelf of meaningful connections. Browse, tend, and nurture the relationships that matter most.
+          </p>
+          <button className="bg-[#1B4B36] text-white px-6 py-3.5 rounded-lg font-bold text-sm inline-flex items-center gap-2 hover:bg-emerald-800 transition-colors shadow-sm">
+            <span className="text-lg leading-none">+</span> Add a Friend
+          </button>
         </div>
-        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
-          <h3 className="text-4xl font-bold text-gray-900 mb-2">3</h3>
-          <p className="text-sm text-gray-400 font-medium">On Track</p>
-        </div>
-        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
-          <h3 className="text-4xl font-bold text-gray-900 mb-2">6</h3>
-          <p className="text-sm text-gray-400 font-medium">Need Attention</p>
-        </div>
-        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
-          <h3 className="text-4xl font-bold text-gray-900 mb-2">12</h3>
-          <p className="text-sm text-gray-400 font-medium">Interactions This Month</p>
-        </div>
-      </div>
 
-      <h2 className="text-2xl font-bold text-gray-900 mb-8">Your Friends</h2>
-
-      {loading ? (
-        <div className="flex justify-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-[#1B4B36]"></div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+          <div className="bg-white p-8 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-gray-50 text-center">
+            <p className="text-4xl font-black text-gray-800 mb-2">{friends.length}</p>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total Friends</p>
+          </div>
+          <div className="bg-white p-8 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-gray-50 text-center">
+            <p className="text-4xl font-black text-gray-800 mb-2">{friends.filter(f => f.status === 'on-track').length}</p>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">On Track</p>
+          </div>
+          <div className="bg-white p-8 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-gray-50 text-center">
+            <p className="text-4xl font-black text-gray-800 mb-2">{friends.filter(f => f.status !== 'on-track').length}</p>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Need Attention</p>
+          </div>
+          <div className="bg-white p-8 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-gray-50 text-center">
+            <p className="text-4xl font-black text-gray-800 mb-2">12</p>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Interactions This Month</p>
+          </div>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+        <h2 className="text-xl font-bold text-gray-900 mb-6">Your Friends</h2>
+
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {friends.map((friend) => (
-            <Link href={`/friend/${friend.id}`} key={friend.id}>
-              <div className="bg-white p-6 rounded-2xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] border border-gray-100 flex flex-col items-center text-center hover:scale-[1.02] transition-transform cursor-pointer h-full">
-                <div className="relative w-24 h-24 mb-4">
-                  <img
-                    src={friend.picture}
-                    alt={friend.name}
-                    className="w-full h-full rounded-full object-cover border-4 border-gray-50 shadow-sm"
-                  />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-1">{friend.name}</h3>
-                <p className="text-sm text-gray-400 mb-4 font-medium">{friend.days_since_contact} days ago</p>
+            <Link key={friend.id} href={`/friend/${friend.id}`} className="group block">
+              <div className="bg-white rounded-[24px] p-8 shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-gray-50 hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center">
+                <img 
+                  src={friend.picture} 
+                  alt={friend.name} 
+                  className="w-20 h-20 rounded-full object-cover mb-4 ring-4 ring-gray-50 group-hover:scale-105 transition-transform" 
+                />
+                <h3 className="text-base font-bold text-gray-900 mb-1">{friend.name}</h3>
+                <p className="text-[10px] text-gray-400 font-bold mb-4">{friend.days_since_contact}d ago</p>
                 
-                <div className="flex flex-wrap justify-center gap-2 mb-6">
-                  {friend.tags.map((tag, index) => (
-                    <span key={index} className="px-3 py-1 bg-[#F1F5F9] text-[#475569] text-[10px] font-bold uppercase tracking-wider rounded-full">
+                <div className="flex flex-wrap justify-center gap-1.5 mb-6">
+                  {friend.tags.map((tag, i) => (
+                    <span key={i} className="px-3 py-1 bg-green-50 text-green-700 text-[8px] font-black uppercase rounded-full tracking-wider">
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <span className={`mt-auto w-full py-2 rounded-lg text-[11px] font-black uppercase tracking-widest ${getStatusColor(friend.status)}`}>
+                <div className={`w-full py-2.5 rounded-full text-[9px] font-black uppercase tracking-widest ${getStatusColor(friend.status)}`}>
                   {friend.status}
-                </span>
+                </div>
               </div>
             </Link>
           ))}
         </div>
-      )}
+      </main>
+
+      <Footer />
     </div>
   );
 }

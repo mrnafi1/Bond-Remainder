@@ -2,33 +2,73 @@
   {
     "id": 1,
     "name": "Nafi Ahmed",
-    "picture": "https://i.pravatar.cc/150?u=nafi",
+    "picture": "https://i.pravatar.cc/150?img=11",
+    "email": "nafi.econ@example.com",
     "days_since_contact": 2,
+    "status": "on-track",
     "tags": ["Best Friend", "University"],
-    "status": "on-track"
+    "bio": "Fellow economics student and aspiring frontend developer. Always up for a coding challenge.",
+    "goal": 7,
+    "next_due_date": "2026-04-20"
   },
   {
     "id": 2,
     "name": "Ariful Islam",
-    "picture": "https://i.pravatar.cc/150?u=arif",
+    "picture": "https://i.pravatar.cc/150?img=12",
+    "email": "arif.sports@example.com",
     "days_since_contact": 15,
+    "status": "almost due",
     "tags": ["School", "Football"],
-    "status": "almost due"
+    "bio": "Childhood friend who loves football and outdoor adventures. We go way back to school days.",
+    "goal": 14,
+    "next_due_date": "2026-04-18"
   },
   {
     "id": 3,
     "name": "Rakib Hasan",
-    "picture": "https://i.pravatar.cc/150?u=rakib",
+    "picture": "https://i.pravatar.cc/150?img=13",
+    "email": "rakib.fitness@example.com",
     "days_since_contact": 45,
+    "status": "overdue",
     "tags": ["Work", "Gym"],
-    "status": "overdue"
+    "bio": "Fitness enthusiast and gym partner. Need to catch up with him for the next workout session.",
+    "goal": 30,
+    "next_due_date": "2026-03-25"
   },
   {
     "id": 4,
     "name": "Samiul Haque",
-    "picture": "https://i.pravatar.cc/150?u=sami",
+    "picture": "https://i.pravatar.cc/150?img=14",
+    "email": "samiul.dev@example.com",
     "days_since_contact": 5,
-    "tags": ["Neighbor"],
-    "status": "on-track"
+    "status": "on-track",
+    "tags": ["Neighbor", "Tech"],
+    "bio": "A tech-savvy neighbor who always helps with PC hardware issues and system maintenance.",
+    "goal": 10,
+    "next_due_date": "2026-04-22"
+  },
+  {
+    "id": 5,
+    "name": "Tanvir Rahman",
+    "picture": "https://i.pravatar.cc/150?img=60",
+    "email": "tanvir.traveller@example.com",
+    "days_since_contact": 20,
+    "status": "almost due",
+    "tags": ["College", "Travel"],
+    "bio": "College friend and a great travel companion. We planned our last trip to Sylhet together.",
+    "goal": 21,
+    "next_due_date": "2026-04-17"
+  },
+  {
+    "id": 6,
+    "name": "Fahim Shahriar",
+    "picture": "https://i.pravatar.cc/150?img=61",
+    "email": "fahim.web@example.com",
+    "days_since_contact": 60,
+    "status": "overdue",
+    "tags": ["Coding", "React"],
+    "bio": "A brilliant developer who introduced me to React and Tailwind CSS. Truly a mentor figure.",
+    "goal": 30,
+    "next_due_date": "2026-03-10"
   }
 ]
